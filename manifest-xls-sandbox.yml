@@ -1,0 +1,14 @@
+---
+instances: 1
+domain: apps.cloud.gov
+services:
+- db-calc-sandbox # name of the database service you created
+applications:
+- name: xls-calc-sandbox2
+  stack: cflinuxfs2
+  path: .
+  timeout: 180
+  host: xls-calc-sandbox2 # you might need to modify this to not conflict with someone else's host name
+  buildpack: python-buildpack
+  memory: 256M
+  command: bash cf.sh

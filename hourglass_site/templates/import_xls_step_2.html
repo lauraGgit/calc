@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="six-columns">
+<h2>IT Schedule 70 Data Capture</h2>
+
+<h3>Step 2: Valdiate Proposed Price List</h3>
+
+<p>
+  Thanks for uploading your price list! Below is the data gleaned from the
+  <strong>(3) Labor Categories</strong> sheet. Please review it and make any
+  necessary corrections.
+</p>
+
+<form method="post">
+  {% csrf_token %}
+  <input type="hidden" name="step" value="2">
+  <input type="hidden" name="num_rows" value="{{ rows | length }}">
+
+  <table>
+    <thead>
+      <tr>
+        <td>{{ header_row.sin.label }}</td>
+        <td>{{ header_row.labor_category.label }}</td>
+        <td>{{ header_row.education_level.label }}</td>
+        <td>{{ header_row.min_years_experience.label }}</td>
+        <td>{{ header_row.price_including_iff.label }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+      <tr>
+        <td>
+          {{ row.sin.errors }}
+          {{ row.sin }}
+        </td>
+        <td>
+          {{ row.labor_category.errors }}
+          {{ row.labor_category }}
+        </td>
+        <td>
+          {{ row.education_level.errors }}
+          {{ row.education_level }}
+        </td>
+        <td>
+          {{ row.min_years_experience.errors }}
+          {{ row.min_years_experience }}
+        </td>
+        <td>
+          {{ row.price_including_iff.errors }}
+          {{ row.price_including_iff }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h3>Step 3: Provide Contract Details</h3>
+
+  <p>
+    You're almost done! Now all we need are some details about the contract your
+    price list data is related to.
+  </p>
+
+  {{ form.as_p }}
+
+  <button type="submit">Submit</button>
+</form>
+
+{% endblock %}

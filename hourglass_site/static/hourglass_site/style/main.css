@@ -336,3 +336,39 @@ footer {
 fieldset {
   margin: 0;
 }
+
+ul.errorlist {
+  list-style-type: none;
+  margin: 0;
+}
+
+ul.errorlist li {
+  display: inline-block;
+  background: crimson;
+  color: white;
+  padding: 4px;
+}
+
+.helptext {
+  display: block;
+  color: gray;
+}
+
+.alert {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+.alert-error {
+  background: crimson;
+  color: white;
+}
+
+.alert-success {
+  background: #044364;
+  color: white;
+}
+
+form > table > tbody {
+  vertical-align: bottom;
+}
