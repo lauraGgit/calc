@@ -5,30 +5,159 @@
 {% endblock %}
 
 {% block body %}
+<style>
+/* This is just here until I'm sure we're using it */
+.steps {
+	margin-bottom: 30px;
+	overflow: hidden;
+  /*text-align: center;*/
+	/*CSS counters to number the steps*/
+	counter-reset: step;
+  width: 50%;
+}
+.steps li {
+	list-style-type: none;
+	color: black;
+	text-transform: uppercase;
+	font-size: 9px;
+  width: 33.3%;
+  /*width: auto;*/
+	float: left;
+	position: relative;
+  text-align: center;
+  padding: 0 10px 0 0;
+}
+.steps li:before {
+	content: counter(step);
+	counter-increment: step;
+	width: 30px;
+	line-height: 30px;
+	display: block;
+	font-size: 10px;
+	color: #333;
+	background: #FFF;
+  border: solid 2px #17779f;
+  border-radius: 30px;
+  margin: 0 auto 5px auto;
+}
+/*progressbar connectors*/
+.steps li:after {
+	content: '';
+	width: 100%;
+	height: 2px;
+	/*background: #e1e1e1;*/
+	background: #17779f;
+  position: absolute;
+	left: -50%;
+	top: 15px;
+	z-index: -1; /*put it behind the numbers*/
+}
+.steps li:first-child:after {
+	/*connector not needed before the first step*/
+	content: none;
+}
+
+.steps li.current:before,
+.steps li.current:after{
+	background: #17779f;
+	color: white;
+}
+
+/* This is copied from https://github.com/blueimp/jQuery-File-Upload/blob/master/css/jquery.fileupload.css */
+.fileinput-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.fileinput-button input {
+  -ms-filter:'alpha(opacity=0)';
+  cursor: pointer;
+  direction: ltr;
+  font-size: 200px;
+  height: 4rem;
+  margin: 0;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 170px;
+}
+.fileinput-button span {
+  position: relative;
+}
+.fileinput-button label {
+  position: absolute;
+  left: -999em;
+}
+
+[type="submit"]:disabled {
+  background-color: #d6d7d9;
+  border: none;
+  color: #323a45;
+  pointer-events: none;
+}
+
+.form-upload {
+  max-width: 52.5rem;
+}
+</style>
 <div class="container">
   <div class="row">
-    <div class="six-columns">
-<h2>IT Schedule 70 Data Capture</h2>
+    <h2 class="twelve columns">IT Schedule 70 data capture</h2>
+  </div>
+  <div class="row">
+    <div class="eight columns">
+      <ul class="steps">
+        <li class="current">Upload data</li>
+        <li>Validate data</li>
+        <li>Add contract details</li>
+      </ul>
+      <h3>Upload a proposed price list</h3>
+      <p>
+        Please upload your proposed price list (PPL) in XLS or XLSX format. We'll then
+        help you validate its data and ask for some details about the
+        contract it's related to.
+      </p>
 
-<h3>Step 1: Upload a Proposed Price List Excel Spreadsheet</h3>
+      {{ form.non_field_errors }}
 
-<p>
-  Please upload your proposed price list (PPL) XLS file. We'll then
-  help you validate its data and ask for some details about the
-  contract it's related to.
-</p>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="step" value="1">
 
-{{ form.non_field_errors }}
+        <div class="fileinput-button">
+          {{ form.xls.label_tag }}
+          <span class="button">Choose PPL file
+          {{ form.xls }}
+          </span>
+          <span class="js-chosen-file file-name"></span>
+          <span class="error">{{ form.xls.errors }}</span>
+        </div>
 
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  <input type="hidden" name="step" value="1">
-
-  {{ form.xls.errors }}
-  {{ form.xls.label_tag }}
-  {{ form.xls }}
-
-  <button type="submit">Submit</button>
-</form>
-
+        <button type="submit" class="button-primary" disabled>Upload & validate</button>
+      </form>
+  </div>
+</div>
+<script type="text/javascript">
+  //just here until I'm sure this works!
+  var shortenString = function(txt){
+    if (txt.length > 40) {
+      txt = txt.slice(0,15) + "..." + txt.slice(-15, -1);
+    }
+    return txt;
+  }
+  document.querySelector('input[type=file]').addEventListener('change', function(evt){
+    if (this.files.length > 0) {
+      var txt = document.createTextNode(this.files[0].name);
+      var fileName = document.querySelector('.js-chosen-file');
+      /* textContent doesn't work in IE8 and innerText doesn't work in new FF */
+      if ('textContent' in fileName) {
+          fileName.textContent = shortenString(txt.textContent);
+      } else {
+          fileName.innerText = shortenString(txt.innerText);
+      }
+      document.querySelector('button[type=submit]').disabled = false;
+    }
+  });
+</script>
 {% endblock %}
