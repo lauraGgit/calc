@@ -123,7 +123,8 @@ class FunctionalTests(LiveServerTestCase):
         super(FunctionalTests, self).fail(*args, **kwargs)
 
     def setUp(self):
-        self.base_url = self.live_server_url.replace('0.0.0.0', 'app')
+        my_ip = socket.gethostbyaddr(socket.gethostname())[2][0]
+        self.base_url = self.live_server_url.replace('0.0.0.0', my_ip)
         #if TESTING_URL:
         #    self.base_url = TESTING_URL
         self.driver.set_window_size(*self.window_size)
