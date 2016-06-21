@@ -34,7 +34,7 @@ from datetime import datetime
 
 TESTING_KEY = 'REMOTE_TESTING'
 REMOTE_TESTING = hasattr(settings, TESTING_KEY) and getattr(settings, TESTING_KEY) or {}
-TESTING_URL = os.environ.get('LOCAL_TUNNEL_URL', REMOTE_TESTING.get('url'))
+TESTING_URL = os.environ.get('LOCAL_TUNNEL_URL', REMOTE_TESTING.get('hub_url'))
 
 PHANTOMJS_TIMEOUT = 3
 WEBDRIVER_TIMEOUT_LOAD_ATTEMPTS = 10
@@ -61,6 +61,7 @@ class FunctionalTests(LiveServerTestCase):
     @classmethod
     def get_driver(cls):
         if not REMOTE_TESTING or not TESTING_URL:
+            raise Exception("ONLY TEST WITH SELENIUM FOR NOW")
             driver = _get_webdriver(os.environ.get('TESTING_BROWSER',
                                                    'phantomjs'))
             driver.command_executor.set_timeout(PHANTOMJS_TIMEOUT)
@@ -69,17 +70,15 @@ class FunctionalTests(LiveServerTestCase):
         if REMOTE_TESTING.get('enabled') == False:
             pass
 
-        username = _get_testing_config('username')
-        access_key = _get_testing_config('access_key')
         hub_url = _get_testing_config('hub_url')
-        if None in (username, access_key, hub_url):
+        if hub_url is None:
             raise Error('You must provide a username, access_key and hub URL!')
 
         desired_cap = webdriver.DesiredCapabilities.CHROME
         # these are the standard Selenium capabilities
-        desired_cap['platform'] = _get_testing_config('platform', 'Windows 7')
-        desired_cap['browserName'] = _get_testing_config('browser', 'internet explorer')
-        desired_cap['version'] = _get_testing_config('browser_version', '9.0')
+#        desired_cap['platform'] = _get_testing_config('platform', 'Windows 7')
+#        desired_cap['browserName'] = _get_testing_config('browser', 'internet explorer')
+#        desired_cap['version'] = _get_testing_config('browser_version', '9.0')
         desired_cap['name'] = 'CALC'
         other_caps = REMOTE_TESTING.get('capabilities')
         if other_caps:
@@ -88,7 +87,7 @@ class FunctionalTests(LiveServerTestCase):
 
         driver = webdriver.Remote(
             desired_capabilities=desired_cap,
-            command_executor=hub_url % (username, access_key)
+            command_executor=hub_url
         )
 
         # XXX should this be higher?
@@ -124,9 +123,9 @@ class FunctionalTests(LiveServerTestCase):
         super(FunctionalTests, self).fail(*args, **kwargs)
 
     def setUp(self):
-        self.base_url = self.live_server_url
-        if TESTING_URL:
-            self.base_url = TESTING_URL
+        self.base_url = self.live_server_url.replace('0.0.0.0', 'app')
+        #if TESTING_URL:
+        #    self.base_url = TESTING_URL
         self.driver.set_window_size(*self.window_size)
         super(FunctionalTests, self).setUp()
 

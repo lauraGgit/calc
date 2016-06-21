@@ -1,21 +1,34 @@
-app:
-  build: .
-  volumes:
-    - .:/calc
-  links:
-    - db
-  working_dir: /calc
-  entrypoint: python /calc/docker_django_management.py
-  environment:
-    - DDM_HOST_USER=calc_user
-    - DDM_IS_RUNNING_IN_DOCKER=yup
-    - PYTHONUNBUFFERED=yup
-    - DATABASE_URL=postgres://calc_user@db/calc
-  command: python manage.py runserver 0.0.0.0:8000
-  ports:
-    - "8000:8000"
-db:
-  image: postgres:9.4
-  environment:
-    - POSTGRES_DB=calc
-    - POSTGRES_USER=calc_user
+version: '2'
+
+services:
+  app:
+    build: .
+    volumes:
+      - .:/calc
+    links:
+      - db
+      - selenium
+    working_dir: /calc
+    entrypoint: python /calc/docker_django_management.py
+    environment:
+      - DDM_HOST_USER=calc_user
+      - DDM_IS_RUNNING_IN_DOCKER=yup
+      - PYTHONUNBUFFERED=yup
+      - DATABASE_URL=postgres://calc_user@db/calc
+      - DJANGO_LIVE_TEST_SERVER_ADDRESS=0.0.0.0:9999
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+      - "9999:9999"
+  db:
+    image: postgres:9.4
+    environment:
+      - POSTGRES_DB=calc
+      - POSTGRES_USER=calc_user
+  selenium:
+    image: selenium/standalone-chrome
+#    environment:
+#      - DISPLAY=:99.0
+#      - DBUS_SESSION_BUS_ADDRESS=/dev/null
+    ports:
+      - "4444:4444"
