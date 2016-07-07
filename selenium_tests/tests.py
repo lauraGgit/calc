@@ -61,6 +61,17 @@ class FunctionalTests(LiveServerTestCase):
 
     @classmethod
     def get_driver(cls):
+        desired_cap = webdriver.DesiredCapabilities.CHROME
+
+        driver = webdriver.Remote(
+            desired_capabilities=desired_cap,
+            command_executor=os.environ['WEBDRIVER_URL']
+        )
+
+        return driver
+
+        # TODO: Make the following code still reachable.
+
         if not REMOTE_TESTING or not TESTING_URL:
             driver = _get_webdriver(os.environ.get('TESTING_BROWSER',
                                                    'phantomjs'))

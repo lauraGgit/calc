@@ -4,6 +4,7 @@ app:
     - .:/calc
   links:
     - db
+    - sshd
   working_dir: /calc
   entrypoint: python /calc/docker_django_management.py
   environment:
@@ -27,3 +28,7 @@ sass:
   working_dir: /calc/hourglass_site/static/hourglass_site
   entrypoint: python /calc/docker_django_management.py
   command: make watch-style
+sshd:
+  build: ./sshd
+  ports:
+    - "8022:22"
