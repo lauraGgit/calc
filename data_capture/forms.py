@@ -35,8 +35,8 @@ class Step3Form(forms.ModelForm):
         label='Business size',
         choices=[
             (None, '---------'),
-            (True, 'Is small business'),
-            (False, 'Is not small business'),
+            (True, 'Small business'),
+            (False, 'Not a small business'),
         ],
         required=True
     )
