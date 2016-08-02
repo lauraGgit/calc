@@ -11,7 +11,13 @@ RUN \
   mv /tmp/phantomjs-$PHANTOMJS_VERSION-linux-x86_64/ /srv/var/phantomjs && \
   ln -s /srv/var/phantomjs/bin/phantomjs /usr/bin/phantomjs
 
-RUN curl -sL https://deb.nodesource.com/setup_5.x | bash -
+# As of 2016/08/02, this requires the Debian distributed version of
+# python 2.7 to be located at /usr/bin/python. However, the official
+# python 3 docker image we're using renames it, so we're going to
+# temporarily rename it *back* so that this command succeeds. Oy.
+RUN ln -s /usr/bin/python2.7.distrib /usr/bin/python && \
+  curl -sL https://deb.nodesource.com/setup_5.x | bash - && \
+  rm /usr/bin/python
 
 RUN apt-get update && \
   apt-get install -y nodejs
