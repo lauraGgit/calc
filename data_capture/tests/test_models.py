@@ -1,3 +1,4 @@
+import datetime
 from django.test import TestCase, override_settings
 from django.contrib.auth.models import User
 
@@ -21,7 +22,10 @@ class ModelTestCase(TestCase):
             is_small_business=False,
             contract_number='GS-123-4567',
             vendor_name='UltraCorp',
-            schedule=self.DEFAULT_SCHEDULE
+            schedule=self.DEFAULT_SCHEDULE,
+            contract_year=1,
+            contract_start=datetime.datetime.now(),
+            contract_end=datetime.datetime.now()
         )
         final_kwargs.update(kwargs)
         return SubmittedPriceList(**final_kwargs)
@@ -29,21 +33,6 @@ class ModelTestCase(TestCase):
 
 @override_settings(DATA_CAPTURE_SCHEDULES=[FAKE_SCHEDULE])
 class ModelsTests(ModelTestCase):
-    def setUp(self):
-        self.user = User.objects.create_user(username='foo')
-        registry._init()
-
-    def create_price_list(self, **kwargs):
-        final_kwargs = dict(
-            submitter=self.user,
-            is_small_business=False,
-            contract_number='GS-123-4567',
-            vendor_name='UltraCorp',
-            schedule=FAKE_SCHEDULE
-        )
-        final_kwargs.update(kwargs)
-        return SubmittedPriceList(**final_kwargs)
-
     def create_row(self, **kwargs):
         final_kwargs = dict(
             labor_category='Project Manager',

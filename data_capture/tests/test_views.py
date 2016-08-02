@@ -161,6 +161,9 @@ class Step3Tests(StepTestCase):
         'contract_number': 'GS-123-4567',
         'vendor_name': 'foo',
         'contractor_site': 'Customer',
+        'contract_year': '1',
+        'contract_start': '10/10/2015',
+        'contract_end': '10/10/2016',
     }
 
     def test_login_is_required(self):
