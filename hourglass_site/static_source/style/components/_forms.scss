@@ -1,4 +1,48 @@
+@import '../base/variables';
 @import '../uswds/forms';
 @import '../uswds/inputs';
 
-//Custom form styles go here
+select.select-small {
+  background-position: right 1rem center;
+  padding: 0.34em;
+}
+
+/* TODO: Django's default form rendering uses a <ul class="errorlist">
+   for errors, and <span class="helptext"> for help text. We should either
+   style them properly, or render our own markup. The following are some
+   temporary styles to make us not look confusing, at least. */
+
+.errorlist {
+  border-left: 3px solid $color-secondary-dark;
+  color: $color-secondary-dark;
+  font-weight: 700;
+  list-style-type: none;
+  margin-bottom: 0;
+  margin-left: -10px;
+  padding-left: 10px;
+
+  li {
+    margin-bottom: 0;
+  }
+
+  + p {
+    border-left: 3px solid $color-secondary-dark;
+    margin-left: -10px;
+    padding-left: 10px;
+
+    label {
+      font-weight: 700;
+      margin-top: 0;
+      padding-top: 0.3rem;
+    }
+
+    input {
+      border: 3px solid $color-secondary-dark;
+    }
+  }
+}
+
+.helptext {
+  color: $color-gray;
+  display: block;
+}

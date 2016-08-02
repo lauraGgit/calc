@@ -15,6 +15,7 @@ input.button-primary[type="submit"],
 input.button-primary[type="reset"],
 input.button-primary[type="button"] {
   background-color: $color-primary;
+  color: $color-white;
   border: 0;
   //necessary here to override Skeleton's input width
   @include media($small-screen) {
@@ -25,6 +26,10 @@ input.button-primary[type="button"] {
   &.button-hover {
     background-color: $color-primary-darker;
     border-color: $color-primary-darker;
+  }
+
+  &:visited {
+    color: $color-white;
   }
 
   &:focus,
@@ -52,6 +57,10 @@ input.button-secondary[type="button"] {
   &.button-hover {
     background-color: $color-secondary-dark;
     border-color: $color-secondary-dark;
+  }
+
+  &:visited {
+    color: $color-white;
   }
 
   &:focus,

@@ -1,7 +1,7 @@
 @import '../base/variables';
 @import '../base/utils';
 
-$form-width: 32rem;
+$form-width: 100%; // was 32rem, but causes weirdness on main page
 $input-max-width: 46rem;
 
 //from USWDS _forms.scss

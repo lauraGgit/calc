@@ -6,45 +6,9 @@
 {% block head %}
 <script src="{% static 'hourglass_site/js/built/data-capture/index.min.js' %}"></script>
 <link rel="stylesheet" href="{% static 'hourglass_site/style/built/data_capture.min.css' %}">
-
 <style>
-/* TODO: Django's default form rendering uses a <ul class="errorlist">
-   for errors, and <span class="helptext"> for help text. We should either
-   style them properly, or render our own markup. The following are some
-   temporary styles to make us not look confusing, at least. */
-
-.errorlist {
-  list-style-type: none;
-  background: crimson;
-  color: white;
-  font-size: smaller;
-  padding: 1em;
-  margin: 0;
-}
-
-.errorlist li {
-  margin-bottom: 0;
-}
-
-.helptext {
-  display: block;
-  color: darkgray;
-}
-
-h1 {
-  margin-top: 0.5em;
-}
-
-.alert {
-  margin-bottom: 2em;
-}
-
 .step-body {
   margin-bottom: 1.5em;
-}
-
-a.button.button-primary {
-  color: white;
 }
 </style>
 {% endblock %}

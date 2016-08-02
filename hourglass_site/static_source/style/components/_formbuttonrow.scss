@@ -11,16 +11,17 @@
   .submit-group {
     float: right;
 
-    button, .button {
+    button,
+    .button {
       float: right;
-      margin-right: 0;
+      margin: 0;
     }
   }
 
   .submit-label {
     display: inline-block;
     height: 38px;
-    color: $color-gray;
+    color: $color-gray-medium;
     text-align: right;
     margin-right: 1em;
     max-width: 160px;

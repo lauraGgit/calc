@@ -308,6 +308,8 @@ section.search {
     width: auto;
     height: auto;
     margin: 15px 0;
+    min-width: 51px;
+    display: inline-block;
   }
   select {
       width: 100%;
