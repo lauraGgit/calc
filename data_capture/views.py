@@ -45,7 +45,7 @@ def step_1(request):
     ctx = {
         'step_number': 1,
         'form': form,
-        'DEBUG': settings.DEBUG
+        'show_debug_ui': settings.DEBUG and not settings.HIDE_DEBUG_UI
     }
 
     if request.is_ajax():

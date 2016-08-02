@@ -27,6 +27,8 @@ load_cups_from_vcap_services('calc-env')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEBUG' in os.environ
 
+HIDE_DEBUG_UI = 'HIDE_DEBUG_UI' in os.environ
+
 if DEBUG:
     os.environ.setdefault(
         'SECRET_KEY',
@@ -215,7 +217,7 @@ DATA_CAPTURE_SCHEDULES = (
     'data_capture.schedules.s70.Schedule70PriceList',
 )
 
-if DEBUG:
+if DEBUG and not HIDE_DEBUG_UI:
     DATA_CAPTURE_SCHEDULES += (
         'data_capture.schedules.fake_schedule.FakeSchedulePriceList',
     )

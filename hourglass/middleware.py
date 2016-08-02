@@ -45,10 +45,10 @@ def show_toolbar(request):
 class DebugOnlyDebugToolbarMiddleware(DebugToolbarMiddleware):
     '''
     Like DebugToolbarMiddleware, but tells Django it's unused if
-    DEBUG is False.
+    DEBUG or HIDE_DEBUG_UI is False.
     '''
 
     def __init__(self):
-        if not settings.DEBUG:
+        if not settings.DEBUG or settings.HIDE_DEBUG_UI:
             raise MiddlewareNotUsed()
         super().__init__()

@@ -203,6 +203,11 @@ string), the boolean is true; otherwise, it's false.
 * `DEBUG` is a boolean value that indicates whether debugging is enabled
   (this should always be false in production).
 
+* `HIDE_DEBUG_UI` is a boolean value that indicates whether to hide
+  various development and debugging affordances in the UI, such as the
+  [Django Debug Toolbar][]. This can be useful when demoing or user testing
+  a debug build.
+
 * `SECRET_KEY` is a large random value corresponding to Django's
   [`SECRET_KEY`][] setting. It is automatically set to a known, insecure
   value when `DEBUG` is true.
@@ -400,3 +405,4 @@ for other than small business.
 [DJ-Database-URL schema]: https://github.com/kennethreitz/dj-database-url#url-schema
 [pytest]: https://pytest.org/latest/usage.html
 [docker-machine-cloud]: https://docs.docker.com/machine/get-started-cloud/
+[Django Debug Toolbar]: https://github.com/jazzband/django-debug-toolbar/
