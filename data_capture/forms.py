@@ -31,6 +31,16 @@ class Step1Form(forms.Form):
 
 
 class Step3Form(forms.ModelForm):
+    is_small_business = forms.ChoiceField(
+        label='Business size',
+        choices=[
+            (None, '---------'),
+            (True, 'Is small business'),
+            (False, 'Is not small business'),
+        ],
+        required=True
+    )
+
     class Meta:
         model = SubmittedPriceList
         fields = [

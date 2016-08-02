@@ -160,6 +160,7 @@ class Step3Tests(StepTestCase):
     valid_form = {
         'contract_number': 'GS-123-4567',
         'vendor_name': 'foo',
+        'is_small_business': 'False',
         'contractor_site': 'Customer',
         'contract_year': '1',
         'contract_start': '10/10/2015',
