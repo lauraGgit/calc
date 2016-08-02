@@ -24,15 +24,11 @@ class SubmittedPriceList(models.Model):
         ],
         max_length=128
     )
-    contract_year = models.IntegerField(null=True, blank=True)
+    contract_year = models.IntegerField()
     contract_start = models.DateField(
-        null=True,
-        blank=True,
         help_text='Use MM/DD/YY format, e.g. "10/25/06".'
     )
     contract_end = models.DateField(
-        null=True,
-        blank=True,
         help_text='Use MM/DD/YY format, e.g. "10/25/06".'
     )
 
