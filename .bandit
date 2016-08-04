@@ -1,2 +1,2 @@
 [bandit]
-exclude: node_modules,selenium_tests,qunit_tests,api/tests,meta/management/commands,docker_django_management.py,data_capture/tests
+exclude: node_modules,frontend/tests,api/tests,meta/management/commands,docker_django_management.py,data_capture/tests

@@ -5,8 +5,8 @@
 {% block title %}Style Guide{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'hourglass_site/style/built/data_explorer.min.css' %}">
-<link rel="stylesheet" href="{% static 'hourglass_site/style/built/data_capture.min.css' %}">
+<link rel="stylesheet" href="{% static 'frontend/built/styles/data_explorer.min.css' %}">
+<link rel="stylesheet" href="{% static 'frontend/built/styles/data_capture.min.css' %}">
 <link rel="stylesheet" href="{% static 'styleguide/styleguide.css' %}">
 <link rel="stylesheet" href="{% static 'styleguide/vendor/prism.css' %}">
 {% endblock %}
@@ -436,5 +436,5 @@ if (upload.isDegraded) {
   {% endguide %}
 </div>
 <script src="{% static 'styleguide/vendor/prism.js' %}"></script>
-<script src="{% static 'hourglass_site/js/built/data-capture/index.min.js' %}"></script>
+<script src="{% static 'frontend/built/js/data-capture/index.min.js' %}"></script>
 {% endblock %}

@@ -1,0 +1,26 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CALC / JavaScript Unit Tests</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <!--[if lte IE 9]>
+    <script src="{% static 'frontend/js/vendor/aight.v2.min.js' %}"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="{% static 'frontend/style/vendor/qunit-1.16.0.css' %}">
+    <script>
+      var API_HOST = "{{ API_HOST }}";
+    </script>
+    {# For the list of files included in this built script, see gulpfile.js #}
+    <script src= "{% static 'frontend/built/js/common/base.min.js' %}"></script>
+  </head>
+  <body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <script src="{% static 'frontend/built/js/data-capture/index.min.js' %}"></script>
+    <script src="{% static 'frontend/js/vendor/qunit-1.16.0.js' %}"></script>
+    <script src="{% static 'frontend/js/hourglass_tests.js' %}"></script>
+    <script src="{% static 'frontend/built/js/tests/index.min.js' %}"></script>
+  </body>
+</html>

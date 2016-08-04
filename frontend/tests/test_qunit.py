@@ -3,7 +3,7 @@ import subprocess
 
 from django.test import LiveServerTestCase
 
-from selenium_tests.utils import build_static_assets
+from .utils import build_static_assets
 
 
 RUNNER_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),

@@ -3,14 +3,12 @@ languages:
   JavaScript: true
   Python: true
 exclude_paths:
-- "hourglass_site/static/hourglass_site/tests/*"
-- "hourglass_site/static/hourglass_site/js/vendor/*"
-- "hourglass_site/static/hourglass_site/style/vendor/*"
-- "hourglass_site/static_source/js/vendor/*"
-- "hourglass_site/static_source/style/libs/*"
+- "frontend/tests/*"
+- "frontend/source/js/vendor/*"
+- "frontend/source/style/libs/*"
 - "styleguide/static/styleguide/vendor/*"
 - "**/migrations/*"
-- "selenium_tests/*"
+- "**/vendor/*"
 engines:
   eslint:
     enabled: true

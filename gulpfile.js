@@ -20,22 +20,22 @@ const del = require('del');
 
 const dirs = {
   src: {
-    style: 'hourglass_site/static_source/style/',
-    scripts: 'hourglass_site/static_source/js/',
+    style: 'frontend/source/sass/',
+    scripts: 'frontend/source/js/',
   },
   dest: {
     style: {
-      built: 'hourglass_site/static/hourglass_site/style/built',
+      built: 'frontend/static/frontend/built/style',
     },
     scripts: {
       // Scripts (vendor libs) common to CALC 1 and 2
-      common: 'hourglass_site/static/hourglass_site/js/built/common',
+      common: 'frontend/static/frontend/built/js/common',
       // CALC 1.0 scripts
-      dataExplorer: 'hourglass_site/static/hourglass_site/js/built/data-explorer',
+      dataExplorer: 'frontend/static/frontend/built/js/data-explorer',
       // CALC 2.0 Data Capture scripts
-      dataCapture: 'hourglass_site/static/hourglass_site/js/built/data-capture',
+      dataCapture: 'frontend/static/frontend/built/js/data-capture',
       // CALC 2.0 Tests
-      tests: 'hourglass_site/static/hourglass_site/js/built/tests',
+      tests: 'frontend/static/frontend/built/js/tests',
     },
   },
 };

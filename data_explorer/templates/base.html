@@ -7,11 +7,11 @@
     <meta name="viewport" content="width=960">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <!--[if lte IE 9]>
-    <script src="{% static 'hourglass_site/js/vendor/aight.v2.min.js' %}"></script>
-    <script src="{% static 'hourglass_site/js/vendor/history.min.js' %}"></script>
+    <script src="{% static 'frontend/js/vendor/aight.v2.min.js' %}"></script>
+    <script src="{% static 'frontend/js/vendor/history.min.js' %}"></script>
     <![endif]-->
     <script>(function(e,t,n){var r=e.querySelectorAll("html")[0];r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})(document,window,0);</script>
-    <link rel="stylesheet" href="{% static 'hourglass_site/style/built/main.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'frontend/built/style/main.min.css' %}"/>
 
     <![if gt IE 8]>
     <script>
@@ -19,7 +19,7 @@
     </script>
 
     {# For the list of files included in this built script, see gulpfile.js #}
-    <script src="{% static 'hourglass_site/js/built/common/base.min.js' %}"></script>
+    <script src="{% static 'frontend/built/js/common/base.min.js' %}"></script>
     <![endif]>
     <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     {% block head %}
@@ -30,7 +30,7 @@
       <div class="container">
         <a class="skip-nav" tabindex="-1" href="#main">Skip navigation</a>
         <p id="usa">
-          <img src="{% static 'hourglass_site/images/flag-usa.png' %}" alt="USA flag">
+          <img src="{% static 'frontend/images/flag-usa.png' %}" alt="USA flag">
           An official website of the U.S. Government</p>
         <p id="site-status">This website is in beta.
           <a href="#help-wanted">Help us improve</a>
@@ -41,16 +41,22 @@
     <header>
       <div class="container">
         <div class="base-header">
-          <a href="{% url 'index' %}"><img class="logo" src="{% static 'hourglass_site/images/calc_logo.png' %}" alt="CALC: Contract Awarded Labor Category Tool"></a>
+          <a class="logo-container" href="{% url 'index' %}"><img class="logo" src="{% static 'frontend/images/calc_logo.png' %}" alt="CALC: Contract Awarded Labor Category Tool"></a>
           <nav>
             <ul>
-              <li><a href="{% url 'about' %}">About this tool</a></li>
               {% if user.is_authenticated %}
-                <li><a href="{% url 'data_capture:step_1' %}">Add price data</a></li>
-                {% if user.is_staff %}
-                <li><a href="{% url 'admin:index' %}">Site administration</a></li>
-                {% endif %}
-                <li><a href="{% url 'uaa_client:logout' %}">Log out {{ user.email }}</a></li>
+
+                <li class="logged-in">Hello, {{ user.email }} <span class="logout"><a href="{% url 'uaa_client:logout' %}">Log out</a></span>
+                  <ul>
+                    {% if user.is_staff %}
+                    <li><a href="{% url 'admin:index' %}">Site admin</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'data_capture:step_1' %}">Add price data</a></li>
+                    <li><a href="{% url 'about' %}">About this tool</a></li>
+                  </ul>
+                </li>
+              {% else %}
+                <li><a href="{% url 'about' %}">About this tool</a></li>
               {% endif %}
             </ul>
           </nav>
@@ -64,22 +70,22 @@
 
           <div class="row price-callout">
             <div class="three columns">
-              <img class="ceiling-icon" src="/static/hourglass_site/images/price-callout/roof.png">
+              <img class="ceiling-icon" src="/static/frontend/images/price-callout/roof.png">
               <p>Ceiling prices</p>
               <p>Maximum prices paid</p>
             </div>
             <div class="three columns">
-              <img class="fully-burdened-icon" src="/static/hourglass_site/images/price-callout/mule.png">
+              <img class="fully-burdened-icon" src="/static/frontend/images/price-callout/mule.png">
               <p>Fully burdened costs</p>
               <p>Wages + additional labor costs</p>
             </div>
             <div class="three columns">
-              <img src="/static/hourglass_site/images/price-callout/breifcase.png">
+              <img src="/static/frontend/images/price-callout/breifcase.png">
               <p>Professional services</p>
               <p>GSA schedule data</p>
             </div>
             <div class="three columns">
-              <img src="/static/hourglass_site/images/price-callout/globe.png">
+              <img src="/static/frontend/images/price-callout/globe.png">
               <p>Worldwide rates</p>
               <p>Rates apply anywhere</p>
             </div>
@@ -125,9 +131,9 @@
 
           <div id="logos" class="three columns">
             <a href="http://gsa.gov"><img alt="General Services Administration logo"
-              src="{% static 'hourglass_site/images/logo-gsa.png' %}"></a>
+              src="{% static 'frontend/images/logo-gsa.png' %}"></a>
             <a href="https://18f.gsa.gov"><img alt="18F logo"
-              src="{% static 'hourglass_site/images/logo-18f.svg' %}"></a>
+              src="{% static 'frontend/images/logo-18f.svg' %}"></a>
           </div>
 
         </div>

@@ -42,8 +42,10 @@ From there, you're just a hop, skip and a jump away from your own dev server:
 ./manage.py runserver
 ```
 
-In another terminal, you will also need to run `gulp` to watch and rebuild static assets (currently just [SASS][] files).
-Note that if you are using our [Docker setup](#using-docker-optional), this will be handled for you.
+In another terminal, you will also need to run `gulp` to watch and rebuild static assets.
+All the static assets (SASS for CSS and ES6 JavaScript) are located in the [`frontend/source/`](frontend/source/) directory. Outputs from the gulp build are placed in `frontend/static/frontend/built/`. Examine [gulpfile.js](gulpfile.js) for details of our gulp asset pipeline.
+
+Note that if you are using our [Docker setup](#using-docker-optional), running gulp will be handled for you.
 
 ```sh
 npm run gulp

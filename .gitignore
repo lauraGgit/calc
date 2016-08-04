@@ -1,6 +1,5 @@
 /static
-/hourglass_site/static/hourglass_site/style/built
-/hourglass_site/static/hourglass_site/js/built
+/frontend/static/frontend/built
 *.pyc
 *.swp
 *.swo
