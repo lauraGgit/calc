@@ -18,7 +18,8 @@
 
 {{ form.file.errors }}
 
-<div class="upload">
+<!-- Quick workaround for https://github.com/18F/calc/issues/520 -->
+<div class="upload" data-force-degradation>
   <input type="file" name="{{ form.file.html_name }}"
          id="{{ form.file.id_for_label }}" accept=".xlsx,.xls,.csv">
   <div class="upload-chooser">
