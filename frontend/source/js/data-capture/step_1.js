@@ -49,16 +49,23 @@ function bindForm() {
     } else {
       e.preventDefault();
 
-      const formData = new window.FormData(form);
+      const formData = new window.FormData();
 
-      if (upload.file) {
-        // It's possible that the user may have dragged-and-dropped a
-        // file to our upload widget, in which case the actual
-        // file <input> element won't contain what we want. So we'll remove
-        // whatever may have come from that <input> and replace it
-        // with the file the upload widget says we need to upload.
-        formData.delete($fileInput.attr('name'));
-        formData.append($fileInput.attr('name'), upload.file);
+      // IE11 doesn't support FormData.prototype.delete(), so we need to
+      // manually construct the FormData ourselves (we used to have
+      // the browser construct it for us, and then replace the file).
+      for (let i = 0; i < form.elements.length; i++) {
+        const el = form.elements[i];
+
+        if (el.name === $fileInput.attr('name') && upload.file) {
+          // It's possible that the user may have dragged-and-dropped a
+          // file to our upload widget, in which case the actual
+          // file <input> element won't contain what we want. So we'll
+          // add what the file the upload widget says we need to upload.
+          formData.append($fileInput.attr('name'), upload.file);
+        } else {
+          formData.append(el.name, el.value);
+        }
       }
 
       const req = $.ajax(form.action, {
