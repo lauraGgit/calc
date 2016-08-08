@@ -70,6 +70,7 @@ def smart_load_from_upload(classname, f):
             if fallback == classname:
                 continue
             try:
+                f.seek(0)
                 next_best_pricelist = load_from_upload(fallback, f)
                 if next_best_pricelist.valid_rows:
                     pricelist = next_best_pricelist

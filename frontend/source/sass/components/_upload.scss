@@ -1,13 +1,17 @@
 @import "../base/variables";
+
 .upload {
+  margin: 3rem 0;
   display: flex;
   height: 6em;
   position: relative;
   align-items: center;
   padding: 0 3em;
   background-color: $color-gray-lightest;
-  transition: background-color 0.5s;
-
+  transition: background-color 0.5s, border-color 0.5s;
+  -webkit-transition: background-color 0.5s, border-color 0.5s;
+  -moz-transition: background-color 0.5s, border-color 0.5s;
+  -o-transition: background-color 0.5s, border-color 0.5s;
   border: 2px dashed $color-gray;
   color: $color-gray;
   font-size: 2rem;
@@ -36,7 +40,16 @@
   }
 
   &.dragged-over {
-    background-color: $color-white;
+    background-color: $color-green-lightest;
+    border: 2px dashed $color-green;
+    .upload-chooser {
+      * {
+        visibility: hidden;
+      }
+      &:before {
+        content: "Drop file here!"
+      }
+    }
   }
 }
 
@@ -55,18 +68,24 @@
   display: none;
 }
 
-.no-js .upload, .js .upload.degraded {
-  font-size: 1.5rem;
-  text-align: center;
-
-  .upload-chooser {
-    display: inline;
-  }
+.no-js .upload,
+.js .upload.degraded {
+  font-size: 1.3rem;
+  display: block;
+  border: none;
 
   input {
+    border: none;
+    font-size: 1.3rem;
+    color: $color-primary;
+    font-weight: $font-weight-bold;
+    padding: 1.5rem 0 1rem;
     // TODO: This is just clearing out the margin-bottom from our standard
     // CSS, which feels like a hack.
     margin-bottom: 0;
+    &:focus {
+      box-shadow: none;
+    }
   }
 
   label {

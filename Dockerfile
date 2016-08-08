@@ -19,8 +19,9 @@ RUN ln -s /usr/bin/python2.7.distrib /usr/bin/python && \
   curl -sL https://deb.nodesource.com/setup_5.x | bash - && \
   rm /usr/bin/python
 
+# Note that we want postgresql-client so 'manage.py dbshell' works.
 RUN apt-get update && \
-  apt-get install -y nodejs
+  apt-get install -y nodejs postgresql-client
 
 COPY package.json /node/
 

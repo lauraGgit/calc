@@ -47,6 +47,7 @@ class FooSchedulePriceList(BasePriceList):
 
     @classmethod
     def load_from_upload(cls, f):
+        f.read()
         raise ValidationError('Bar')
 
 
