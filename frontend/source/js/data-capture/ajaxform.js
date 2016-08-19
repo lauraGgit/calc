@@ -2,6 +2,8 @@
 
 const $ = jQuery;
 
+let $ariaAlerts = null;
+
 let delegate = {
   redirect(url) {
     window.location = url;
@@ -25,6 +27,21 @@ function replaceForm(html) {
   $(getForm()).hide().fadeIn();
 }
 
+function initAriaAlerts() {
+  if (!$ariaAlerts) {
+    $ariaAlerts = $('<div role="alert" class="sr-only"></div>');
+    $ariaAlerts.prependTo('body');
+  }
+  $ariaAlerts.empty();
+}
+
+function shutdownAriaAlerts() {
+  if ($ariaAlerts) {
+    $ariaAlerts.remove();
+    $ariaAlerts = null;
+  }
+}
+
 function bindForm() {
   const form = getForm();
   const $upload = $('.upload', form);
@@ -35,10 +52,12 @@ function bindForm() {
     return null;
   }
 
+  initAriaAlerts();
+
   $upload.uploadify();
 
   const upload = $fileInput.data('upload');
-  const self = { form, upload, $upload, $fileInput, $submit };
+  const self = { form, upload, $upload, $fileInput, $submit, $ariaAlerts };
 
   if (!upload) {
     // Presently we require an ajaxform to contain exactly one
@@ -101,10 +120,16 @@ function bindForm() {
 
       $(form).addClass('submit-in-progress');
 
+      $ariaAlerts.empty();
+
       req.done((data) => {
         if (data.form_html) {
           replaceForm(data.form_html);
-          bindForm();
+          let newForm = bindForm();
+          if (newForm) {
+            let newAlerts = $('[role="alert"]', newForm.form).clone();
+            $ariaAlerts.append(newAlerts);
+          }
         } else if (data.redirect_url) {
           delegate.redirect(data.redirect_url);
         } else {
@@ -131,5 +156,6 @@ exports.setDelegate = newDelegate => {
 };
 exports.getForm = getForm;
 exports.bindForm = bindForm;
+exports.shutdownAriaAlerts = shutdownAriaAlerts;
 
 window.testingExports__ajaxform = exports;

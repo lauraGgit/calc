@@ -11,9 +11,11 @@ QUnit.module('ajaxform', {
   beforeEach() {
     server = sinon.fakeServer.create();
     $('[data-ajaxform]').remove();
+    ajaxform.shutdownAriaAlerts();
   },
   afterEach() {
     $('[data-ajaxform]').remove();
+    ajaxform.shutdownAriaAlerts();
     server.restore();
   },
 });
@@ -53,6 +55,10 @@ function makeFormHtml(extraOptions) {
     $form.find('.upload').attr('data-force-degradation', '');
   }
 
+  if (options.alert) {
+    $('form', $form).append('<div role="alert">' + options.alert + '</div>');
+  }
+
   $form.find('input[name="foo"]').attr('value', options.fooValue);
 
   return $form.html();
@@ -86,6 +92,14 @@ test('submit btn enabled on upload widget changefile', assert => {
 
   s.$fileInput.trigger('changefile', { name: 'baz' });
   assert.ok(!s.$submit.prop('disabled'), 'submit button is enabled');
+});
+
+test('$ariaAlerts is initialized and starts out empty', assert => {
+  const s = addForm({ isDegraded: true });
+
+  assert.equal(s.$ariaAlerts.attr('role'), 'alert');
+  assert.ok(s.$ariaAlerts.hasClass('sr-only'));
+  assert.equal(s.$ariaAlerts.html(), '');
 });
 
 test('degraded input does not cancel form submission', assert => {
@@ -122,6 +136,27 @@ advancedTest('submit triggers ajax w/ form data', assert => {
   s.upload.file = createBlob('hello there');
 
   $(s.form).submit();
+});
+
+advancedTest('form_html populates $ariaAlerts', assert => {
+  const s = addForm();
+
+  s.upload.file = createBlob('blah');
+  $(s.form).submit();
+
+  server.requests[0].respond(
+    200,
+    { 'Content-Type': 'application/json' },
+    JSON.stringify({
+      form_html: makeFormHtml({ alert: 'invalid yo' }),
+    })
+  );
+
+  const sNew = $(ajaxform.getForm()).data('ajaxform');
+
+  assert.ok(sNew !== s);
+  assert.strictEqual(s.$ariaAlerts, sNew.$ariaAlerts);
+  assert.equal(sNew.$ariaAlerts.text(), 'invalid yo');
 });
 
 advancedTest('form_html replaces form & rebinds it', assert => {

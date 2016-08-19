@@ -3,6 +3,10 @@
       action="{% url 'styleguide:ajaxform' %}">
   {% csrf_token %}
 
+  {% if request.is_ajax %}
+  {% include 'data_capture/messages.html' %}
+  {% endif %}
+
   {% with form=ajaxform_form %}
     {{ form.non_field_errors }}
     {{ form.question.errors }}
