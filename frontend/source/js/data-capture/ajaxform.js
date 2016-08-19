@@ -125,9 +125,9 @@ function bindForm() {
       req.done((data) => {
         if (data.form_html) {
           replaceForm(data.form_html);
-          let newForm = bindForm();
+          const newForm = bindForm();
           if (newForm) {
-            let newAlerts = $('[role="alert"]', newForm.form).clone();
+            const newAlerts = $('[role="alert"]', newForm.form).clone();
             $ariaAlerts.append(newAlerts);
           }
         } else if (data.redirect_url) {

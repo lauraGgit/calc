@@ -56,7 +56,7 @@ function makeFormHtml(extraOptions) {
   }
 
   if (options.alert) {
-    $('form', $form).append('<div role="alert">' + options.alert + '</div>');
+    $('form', $form).append(`<div role="alert">${options.alert}</div>`);
   }
 
   $form.find('input[name="foo"]').attr('value', options.fooValue);
