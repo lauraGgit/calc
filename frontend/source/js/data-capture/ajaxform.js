@@ -2,7 +2,11 @@
 
 const $ = jQuery;
 
+
 let $ariaAlerts = null;
+
+const MISC_ERROR = 'Sorry, we’re having trouble. ' +
+                   'Please try again later or refresh your browser.';
 
 let delegate = {
   redirect(url) {
@@ -133,13 +137,13 @@ function bindForm() {
         } else if (data.redirect_url) {
           delegate.redirect(data.redirect_url);
         } else {
-          delegate.alert(`Invalid server response: ${data}`);
+          delegate.alert(MISC_ERROR);
           $(form).removeClass('submit-in-progress');
         }
       });
 
       req.fail(() => {
-        delegate.alert('An error occurred when submitting your data.');
+        delegate.alert(MISC_ERROR);
         $(form).removeClass('submit-in-progress');
       });
     }
@@ -154,6 +158,7 @@ exports.setDelegate = newDelegate => {
   delegate = newDelegate;
   return delegate;
 };
+exports.MISC_ERROR = MISC_ERROR;
 exports.getForm = getForm;
 exports.bindForm = bindForm;
 exports.shutdownAriaAlerts = shutdownAriaAlerts;
