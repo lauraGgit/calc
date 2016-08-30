@@ -31,6 +31,10 @@ exports.MISC_ERROR = MISC_ERROR;
 
 class AjaxForm extends window.HTMLFormElement {
   attachedCallback() {
+    if ('isDegraded' in this) {
+      return;
+    }
+
     this.isDegraded = !supports.formData() ||
                       supports.isForciblyDegraded(this);
     if (!this.isDegraded) {

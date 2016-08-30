@@ -11,6 +11,10 @@ const HAS_BROWSER_SUPPORT = supports.dragAndDrop() && supports.formData() &&
 
 class UploadInput extends window.HTMLInputElement {
   attachedCallback() {
+    if ('isUpgraded' in this) {
+      return;
+    }
+
     this.isUpgraded = false;
     this._upgradedValue = null;
     if (this.getAttribute('type') !== 'file') {
@@ -107,6 +111,10 @@ class UploadWidget extends window.HTMLElement {
     if ($input.length !== 1 || $input.attr('is') !== 'upload-input') {
       throw new Error('<upload-widget> must contain exactly one ' +
                       '<input is="upload-input">.');
+    }
+
+    if ('isDegraded' in this) {
+      return;
     }
 
     this.uploadInput = $input[0];
