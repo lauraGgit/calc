@@ -1,5 +1,7 @@
 {% extends 'data_capture/step.html' %}
 
+{% load is_number %}
+
 {% block subtitle %}Validate data{% endblock %}
 
 {% block step_body %}
@@ -81,7 +83,9 @@
   {% for row in rows %}
     <tr>
     {% for field in row %}
-      <td>{{ field.value }}</td>
+      <td {% if field|is_number %}class="number"{% endif %}>
+        {{ field.value }}
+      </td>
     {% endfor %}
     </tr>
   {% endfor %}

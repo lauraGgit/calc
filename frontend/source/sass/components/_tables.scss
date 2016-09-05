@@ -125,3 +125,7 @@ td.collapsed {
   border-left: 1px dotted $color-gray-lightest;
 }
 
+td.number {
+  text-align: right;
+  font-family: monospace;
+}
