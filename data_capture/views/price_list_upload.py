@@ -23,11 +23,35 @@ def gleaned_data_required(f):
     return wrapper
 
 
+def get_nested_item(obj, keys, default=None):
+    '''
+    Get a nested item from a nested structure of dictionary-like objects,
+    returning a default value if any expected keys are not present.
+
+    Examples:
+
+        >>> d = {'foo': {'bar': 'baz'}}
+        >>> get_nested_item(d, ('foo', 'bar'))
+        'baz'
+        >>> get_nested_item(d, ('foo', 'blarg'))
+    '''
+
+    key = keys[0]
+    if key not in obj:
+        return default
+    if len(keys) > 1:
+        return get_nested_item(obj[key], keys[1:], default)
+    return obj[key]
+
+
 @role_permissions_required('Contract Officers')
 @require_http_methods(["GET", "POST"])
 def step_1(request):
     if request.method == 'GET':
-        form = forms.Step1Form()
+        form = forms.Step1Form(data=get_nested_item(
+            request.session,
+            ('data_capture:price_list', 'step_1_POST')
+        ))
     else:
         form = forms.Step1Form(request.POST)
         if form.is_valid():
@@ -55,7 +79,10 @@ def step_2(request):
         return redirect('data_capture:step_1')
 
     if request.method == 'GET':
-        form = forms.Step2Form()
+        form = forms.Step2Form(data=get_nested_item(
+            request.session,
+            ('data_capture:price_list', 'step_2_POST')
+        ))
     else:
         form = forms.Step2Form(request.POST)
         if form.is_valid():
