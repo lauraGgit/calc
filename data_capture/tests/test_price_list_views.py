@@ -1,6 +1,7 @@
 import io
 import json
 import unittest
+
 from django.core.management import call_command
 
 from ..models import SubmittedPriceList
@@ -30,7 +31,15 @@ class PriceListStepTestCase(StepTestCase):
     def setUp(self):
         super().setUp()
         registry._init()
+
+    @classmethod
+    def setUpClass(cls):
+        super(PriceListStepTestCase, cls).setUpClass()
         call_command('initgroups', stdout=io.StringIO())
+
+    @classmethod
+    def tearDownClass(cls):
+        super(PriceListStepTestCase, cls).tearDownClass()
 
     def login(self, groups=None, **kwargs):
         if groups is None:

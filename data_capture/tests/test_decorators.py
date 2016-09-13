@@ -9,7 +9,7 @@ from django.contrib.auth.models import Permission
 
 from ..decorators import (handle_cancel,
                           staff_login_required,
-                          require_role_permissions)
+                          role_permissions_required)
 from .common import BaseTestCase
 from hourglass.urls import urlpatterns
 
@@ -34,7 +34,7 @@ def staff_only_view(request):
     return HttpResponse('ok')
 
 
-@require_role_permissions('Contract Officers')
+@role_permissions_required('Contract Officers')
 def co_only_view(request):
     return HttpResponse('ok')
 
@@ -143,7 +143,7 @@ class StaffLoginRequiredTests(BaseTestCase):
 
 
 @override_settings(ROOT_URLCONF=__name__)
-class ContractOfficerPermsRequiredTests(BaseTestCase):
+class RolePermissionsRequiredTests(BaseTestCase):
     def test_redirects_to_login_when_anonymous_user(self):
         res = self.client.get('/co_only_view/')
         self.assertEqual(302, res.status_code)
@@ -169,7 +169,7 @@ class ContractOfficerPermsRequiredTests(BaseTestCase):
         res = self.client.get('/co_only_view/')
         self.assertEqual(403, res.status_code)
 
-    def test_user_in_contract_officer_group_is_admitted(self):
+    def test_user_in_group_is_admitted(self):
         call_command('initgroups', stdout=io.StringIO())
         self.login(groups=['Contract Officers'])
         res = self.client.get('/co_only_view/')

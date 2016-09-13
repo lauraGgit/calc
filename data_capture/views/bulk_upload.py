@@ -5,13 +5,13 @@ from django.conf import settings
 
 from .. import forms, jobs
 from ..r10_spreadsheet_converter import Region10SpreadsheetConverter
-from ..decorators import handle_cancel, staff_login_required
+from ..decorators import handle_cancel, role_permissions_required
 from .common import add_generic_form_error
 from frontend import ajaxform
 from contracts.models import BulkUploadContractSource
 
 
-@staff_login_required
+@role_permissions_required('Data Administrators')
 @require_http_methods(["GET", "POST"])
 def region_10_step_1(request):
     '''
@@ -54,7 +54,7 @@ def region_10_step_1(request):
     )
 
 
-@staff_login_required
+@role_permissions_required('Data Administrators')
 @handle_cancel
 @require_http_methods(["GET", "POST"])
 def region_10_step_2(request):
@@ -91,7 +91,7 @@ def region_10_step_2(request):
     return redirect('data_capture:bulk_region_10_step_3')
 
 
-@staff_login_required
+@role_permissions_required('Data Administrators')
 def region_10_step_3(request):
     '''Show success page'''
 

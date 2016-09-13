@@ -83,7 +83,7 @@ def staff_login_required(function=None,
     return actual_decorator
 
 
-def require_role_permissions(role, login_url=None):
+def role_permissions_required(role, login_url=None):
     def check_perms(user):
         # First check if the user has the permission (even anon users)
         if user.has_perms(ROLES[role]):
