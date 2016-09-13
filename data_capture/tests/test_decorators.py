@@ -9,7 +9,7 @@ from django.contrib.auth.models import Permission
 
 from ..decorators import (handle_cancel,
                           staff_login_required,
-                          contract_officer_perms_required)
+                          require_role_permissions)
 from .common import BaseTestCase
 from hourglass.urls import urlpatterns
 
@@ -34,7 +34,7 @@ def staff_only_view(request):
     return HttpResponse('ok')
 
 
-@contract_officer_perms_required
+@require_role_permissions('Contract Officers')
 def co_only_view(request):
     return HttpResponse('ok')
 
