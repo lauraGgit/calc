@@ -88,7 +88,7 @@ def role_permissions_required(role, login_url=None):
     Decorator to check that a user accessing the decorated view has the
     permissions associated with role.
     Valid role names are those specified in initgroups.py.
-     
+
     If the user is not-authenticated, then they will first be redirected to
     login. If the user is authenticated but does not have the correct
     permissions, a PermissionDenied exception will be raised.
