@@ -7,6 +7,7 @@ ROLES = {}
 ROLES['Data Administrators'] = set([
     'auth.add_user',
     'auth.change_user',
+    'contracts.add_bulkuploadcontractsource',
     'data_capture.change_submittedpricelist',
     'data_capture.change_submittedpricelistrow',
 ])
