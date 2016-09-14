@@ -57,7 +57,17 @@ def handle_cancel(*args, redirect_name='index', key_prefix='data_capture:'):
 def staff_login_required(function=None,
                          redirect_field_name=REDIRECT_FIELD_NAME,
                          login_url=None):
+    '''
+    Decorator to check that the user accessing the decorated view has their
+    is_staff flag set to True.
+    It will first redirect to login_url or the default login url if the user is
+    not authenticated. If the user is authenticated but is not staff, then
+    a PermissionDenied exception will be raised.
+    '''
 
+    # Based off code from the Django project
+    # License: https://github.com/django/django/blob/c1aec0feda73ede09503192a66f973598aef901d/LICENSE  # NOQA
+    # Code reference: https://github.com/django/django/blob/c1aec0feda73ede09503192a66f973598aef901d/django/contrib/auth/decorators.py#L40  # NOQA
     def check_if_staff(user):
         if not user.is_authenticated():
             # returning False will cause the user_passes_test decorator
@@ -93,6 +103,10 @@ def role_permissions_required(role, login_url=None):
     login. If the user is authenticated but does not have the correct
     permissions, a PermissionDenied exception will be raised.
     '''
+
+    # Based off code from the Django project
+    # License: https://github.com/django/django/blob/c1aec0feda73ede09503192a66f973598aef901d/LICENSE  # NOQA
+    # Code reference: https://github.com/django/django/blob/c1aec0feda73ede09503192a66f973598aef901d/django/contrib/auth/decorators.py  # NOQA
     def check_perms(user):
         # First check if the user has the permission (even anon users)
         if user.has_perms(ROLES[role]):
